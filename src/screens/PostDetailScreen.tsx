@@ -3,22 +3,24 @@ import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { RouteProp, useRoute, useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../../App';
+import { RootStackParamList } from '../../App'; // Убедитесь, что этот импорт корректен
 
+// Тип параметров для экрана PostDetail
 type PostDetailRouteParams = {
   PostDetail: {
-    postId: string;
+    postId: string; // Ожидаем postId как строку
     postTitle: string;
-    postContent: string;
+    postContent: string; // Ожидаем postContent
   };
 };
 
+// Указываем RouteProp для использования useRoute
 type PostDetailScreenRouteProp = RouteProp<PostDetailRouteParams, 'PostDetail'>;
 
 const PostDetailScreen: React.FC = () => {
   const route = useRoute<PostDetailScreenRouteProp>();
   const navigation = useNavigation();
-  const { postTitle, postContent } = route.params;
+  const { postId, postTitle, postContent } = route.params; // Получаем данные из параметров маршрута
 
   return (
     <SafeAreaView style={styles.container}>
@@ -63,6 +65,16 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 15,
     elevation: 2,
+    // Добавим тень для Android
+    shadowColor: "#000",
+    shadowOffset: {
+        width: 0,
+        height: 1,
+    },
+    shadowOpacity: 0.20,
+    shadowRadius: 1.41,
+    // Для iOS
+    // elevation: 2, // Уже есть, но добавим для полноты
   },
   contentText: {
     fontSize: 16,

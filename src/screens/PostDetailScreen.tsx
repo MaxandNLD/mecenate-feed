@@ -1,42 +1,21 @@
 // src/screens/PostDetailScreen.tsx
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
-import { RouteProp, useRoute, useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../../App'; // Убедитесь, что этот импорт корректен
+import { SafeAreaView, View, Text, StyleSheet, ScrollView } from 'react-native';
+import { useRoute, RouteProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../App';
 
-// Тип параметров для экрана PostDetail
-type PostDetailRouteParams = {
-  PostDetail: {
-    postId: string; // Ожидаем postId как строку
-    postTitle: string;
-    postContent: string; // Ожидаем postContent
-  };
-};
-
-// Указываем RouteProp для использования useRoute
-type PostDetailScreenRouteProp = RouteProp<PostDetailRouteParams, 'PostDetail'>;
+type PostDetailScreenRouteProp = RouteProp<RootStackParamList, 'PostDetail'>;
 
 const PostDetailScreen: React.FC = () => {
   const route = useRoute<PostDetailScreenRouteProp>();
-  const navigation = useNavigation();
-  const { postId, postTitle, postContent } = route.params; // Получаем данные из параметров маршрута
+  const { postTitle, postContent } = route.params;
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <View style={styles.header}>
-          <MaterialIcons name="article" size={24} color="#007bff" />
-          <Text style={styles.title}>{postTitle}</Text>
-        </View>
-        <View style={styles.content}>
-          <Text style={styles.contentText}>{postContent}</Text>
-        </View>
+      <ScrollView contentContainerStyle={styles.content}>
+        <Text style={styles.title}>{postTitle}</Text>
+        <Text style={styles.body}>{postContent}</Text>
       </ScrollView>
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        <MaterialIcons name="arrow-back" size={16} color="#fff" />
-        <Text style={styles.backButtonText}>Назад к ленте</Text>
-      </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -46,55 +25,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f5f5f5',
   },
-  scrollContent: {
+  content: {
     padding: 15,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#333',
-    marginLeft: 10,
+    marginBottom: 15,
   },
-  content: {
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    padding: 15,
-    elevation: 2,
-    // Добавим тень для Android
-    shadowColor: "#000",
-    shadowOffset: {
-        width: 0,
-        height: 1,
-    },
-    shadowOpacity: 0.20,
-    shadowRadius: 1.41,
-    // Для iOS
-    // elevation: 2, // Уже есть, но добавим для полноты
-  },
-  contentText: {
+  body: {
     fontSize: 16,
+    color: '#666',
     lineHeight: 24,
-    color: '#333',
-  },
-  backButton: {
-    backgroundColor: '#007bff',
-    padding: 15,
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: 15,
-    borderRadius: 5,
-    flexDirection: 'row',
-  },
-  backButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
-    marginLeft: 5,
   },
 });
 

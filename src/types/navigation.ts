@@ -4,6 +4,5 @@ export type RootStackParamList = {
   PostDetail: {
     postId: string;
     postTitle: string;
-    // Добавьте другие свойства, если они будут передаваться
   };
 };
